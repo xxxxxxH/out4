@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.layout_activity_select_language.*
@@ -15,15 +14,13 @@ import net.utils.Constanst
 import net.utils.Language
 import net.utils.OnclickListener
 import java.util.*
-import java.util.Arrays.*
-import kotlin.collections.ArrayList
 
 class LanguageActivity : AppCompatActivity(), OnclickListener {
 
     var adapter: LanguageAdapter? = null
     var languageMap: HashMap<String, String>? = null
     var countrys: ArrayList<String>? = null
-    var type = ""
+    var type:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +29,7 @@ class LanguageActivity : AppCompatActivity(), OnclickListener {
         countrys = Language.getInstance().getAllCountry(languageMap)
         val intent = intent
         type = intent.getStringExtra("type") as String
+        title_bar.text = "language"
         initView()
     }
 
@@ -64,6 +62,12 @@ class LanguageActivity : AppCompatActivity(), OnclickListener {
         select_recycler.layoutManager = layoutManager
         select_recycler.adapter = adapter
         adapter!!.setListener(this)
+
+        clear.setOnClickListener {
+            if (!TextUtils.isEmpty(editLan.text.toString())) {
+                editLan.text.clear()
+            }
+        }
     }
 
     private fun findItem(key: String): Int {
@@ -77,12 +81,12 @@ class LanguageActivity : AppCompatActivity(), OnclickListener {
         return index
     }
 
-    override fun onItemClick(view: View?, position: Int,type:String) {
+    override fun onItemClick(view: View?, position: Int, type: String) {
         val language = countrys?.get(position)
-        if (TextUtils.equals(type, "from")) {
+        if (TextUtils.equals(this.type, "from")) {
             Constanst.FROM_LANGUAGE = language
         }
-        if (TextUtils.equals(type, "to")) {
+        if (TextUtils.equals(this.type, "to")) {
             Constanst.TO_LANGUAGE = language
         }
         finish()

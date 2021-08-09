@@ -26,8 +26,10 @@ class CollectionActivity : AppCompatActivity(), OnclickListener {
         type = intent.getStringExtra("type") as String
         if (TextUtils.equals(type, "collection")) {
             data = MMKVUtils.getAllDatas("collection")
+            title_bar.text = "collection"
         } else if (TextUtils.equals(type, "history")) {
             data = MMKVUtils.getAllDatas("history")
+            title_bar.text = "history"
         }
         adapter = CollectionAdapter(data, type)
         val layoutManager = LinearLayoutManager(this)
@@ -39,6 +41,7 @@ class CollectionActivity : AppCompatActivity(), OnclickListener {
             finish()
         }
     }
+
 
     override fun onItemClick(view: View?, position: Int, type: String?) {
         val entity = data!![position] as DataEntity

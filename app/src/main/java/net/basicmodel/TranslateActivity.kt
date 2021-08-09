@@ -39,6 +39,8 @@ class TranslateActivity : AppCompatActivity() {
         p.height = ScreenUtils.getScreenSize(this)[0] / 4
         input_language.layoutParams = p
 
+        title_bar.text = "translate"
+
         //language_from
         language_from.setOnClickListener {
             selectLanguage("from")
